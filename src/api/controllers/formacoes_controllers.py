@@ -1,9 +1,6 @@
-import datetime
-
 from flask import Blueprint, request
 
 from data.database import db
-from domain.models.Curriculo import Curriculo
 from domain.models.Formacao import Formacao
 
 bp = Blueprint('formacoes_controllers', __name__, url_prefix='/formacoes')
@@ -15,7 +12,7 @@ def list_formacoes_curriculo():
         return {'formacoes': [
             formacao.to_dict() for formacao in (Formacao
                                                 .query
-                                                .filter_by(id_candidato=request.args.get('id_curriculo'))
+                                                .filter_by(id_curriculo=request.args.get('id_curriculo'))
                                                 .all())]}
     except Exception as exc:
         return {'error': str(exc)}
@@ -26,7 +23,7 @@ def get_formacao():
     try:
         return (Formacao
                 .query
-                .filter_by(id_curriculo=request.args.get('id_formacao'))
+                .filter_by(id_formacao=request.args.get('id_formacao'))
                 .first()
                 .to_dict())
     except Exception as exc:
@@ -47,7 +44,7 @@ def create_formacao():
 @bp.route('/update', methods=['PUT'])
 def update_formacao():
     try:
-        formacao_atualizar = Formacao.query.filter_by(id_curriculo=request.form.get('id_formacao')).first()
+        formacao_atualizar = Formacao.query.filter_by(id_formacao=request.form.get('id_formacao')).first()
 
         formacao_atualizar.nome_formacao = request.form.get('nome_formacao')
         formacao_atualizar.nivel = request.form.get('nivel')
@@ -69,6 +66,6 @@ def delete_curriculo():
 
         db.session.delete(curriculo_deletar)
         db.session.commit()
-        return {'message': 'curriculo deletado com sucesso'}
+        return {'message': 'formacao deletada com sucesso'}
     except Exception as exc:
         return {'error': str(exc)}
