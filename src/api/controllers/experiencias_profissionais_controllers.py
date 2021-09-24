@@ -1,11 +1,11 @@
-import datetime
-
 from flask import Blueprint, request
 
 from data.database import db
-from domain.models.Curriculo import Curriculo
 from domain.models.ExperienciaProfissional import ExperienciaProfissional
-from domain.models.Formacao import Formacao
+from flask import Blueprint, request
+
+from data.database import db
+from domain.models.ExperienciaProfissional import ExperienciaProfissional
 
 bp = Blueprint('experiencias_profissionais_controllers', __name__, url_prefix='/experiencias_profissionais')
 
@@ -16,7 +16,7 @@ def list_experiencias_profissionais_curriculo():
         return {'experiencias_profissionais': [
             experiencia.to_dict() for experiencia in (ExperienciaProfissional
                                                       .query
-                                                      .filter_by(id_candidato=request.args.get('id_curriculo'))
+                                                      .filter_by(id_curriculo=request.args.get('id_curriculo'))
                                                       .all())]}
     except Exception as exc:
         return {'error': str(exc)}
@@ -27,7 +27,7 @@ def get_experiencia_profissional():
     try:
         return (ExperienciaProfissional
                 .query
-                .filter_by(id_curriculo=request.args.get('id_experiencia_profissional'))
+                .filter_by(id_experiencia_profissional=request.args.get('id_experiencia_profissional'))
                 .first()
                 .to_dict())
     except Exception as exc:
@@ -50,7 +50,7 @@ def update_experiencia_profissional():
     try:
         experiencia_atualizar = (ExperienciaProfissional
                                  .query
-                                 .filter_by(id_curriculo=request.form.get('id_experiencia_profissional'))
+                                 .filter_by(id_experiencia_profissional=request.form.get('id_experiencia_profissional'))
                                  .first())
 
         experiencia_atualizar.nome_empresa = request.form.get('nome_empresa')
@@ -68,10 +68,13 @@ def update_experiencia_profissional():
 @bp.route('/delete', methods=['DELETE'])
 def delete_experiencia_profissional():
     try:
-        curriculo_deletar = Formacao.query.filter_by(id_formacao=request.form.get('id_formacao')).first()
+        curriculo_deletar = (ExperienciaProfissional
+                             .query
+                             .filter_by(id_experiencia_profissional=request.form.get('id_experiencia_profissional'))
+                             .first())
 
         db.session.delete(curriculo_deletar)
         db.session.commit()
-        return {'message': 'curriculo deletado com sucesso'}
+        return {'message': 'experiencia profissional deletada com sucesso'}
     except Exception as exc:
         return {'error': str(exc)}
