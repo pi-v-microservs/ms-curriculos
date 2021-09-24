@@ -18,6 +18,12 @@ def create_app(config_opt: str = "default"):
     from api.controllers import curriculos_controllers
     app.register_blueprint(curriculos_controllers.bp)
 
+    from api.controllers import formacoes_controllers
+    app.register_blueprint(formacoes_controllers.bp)
+
+    from api.controllers import experiencias_profissionais_controllers
+    app.register_blueprint(experiencias_profissionais_controllers.bp)
+
     @app.cli.command(name='init_db')
     @with_appcontext
     def init_db():
