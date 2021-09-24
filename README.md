@@ -40,17 +40,17 @@ flask run
 
 ### 2.2. Formações:
 > **GET** <br>
-> **Listar** todas as formacoes de um curriculo por id_curriculo: ```/curriculos/list``` <br>
-> **Buscar** por id_curriculo: ```/curriculos/get``` <br>
+> **Listar** todas as formacoes de um curriculo por id_curriculo: ```/formacoes/list``` <br>
+> **Buscar** por id_curriculo: ```/formacoes/get``` <br>
 
 > **POST** <br>
-> **Criar** novo: ```/curriculos/create``` <br>
+> **Criar** novo: ```/formacoes/create``` <br>
 
 > **PUT** <br>
-> **Atualizar** existente por id_curriculo: ```/curriculos/update``` <br>
+> **Atualizar** existente por id_curriculo: ```/formacoes/update``` <br>
 
 > **DELETE** <br>
-> **Deletar** existente por id_curriculo: ```/curriculos/delete```
+> **Deletar** existente por id_curriculo: ```/formacoes/delete```
 
 ### 2.3. Experiências Profissionais:
 
